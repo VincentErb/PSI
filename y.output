@@ -1,0 +1,602 @@
+Grammaire
+
+    0 $accept: start $end
+
+    1 start: tMAIN tPAROPEN mainArg tPARCLOSED tBRACKETOPEN mainBody tBRACKETCLOSED
+
+    2 mainArg: %empty
+    3        | tINT
+
+    4 mainBody: declare affect
+
+    5 declare: %empty
+
+    6 $@1: %empty
+
+    7 declare: tINT $@1 declBody declare
+
+    8 $@2: %empty
+
+    9 declare: tCONST tINT $@2 declBody declare
+
+   10 declBody: tID tAFFECT tINTVAR tENDEXPR
+   11         | tID tENDEXPR
+   12         | tID tCOMMA declBody
+   13         | tID tAFFECT tINTVAR tCOMMA declBody
+
+   14 affect: %empty
+   15       | tID tAFFECT exp tENDEXPR affect
+   16       | printf affect
+
+   17 exp: tPAROPEN exp tPARCLOSED
+   18    | exp tPLUS exp
+   19    | exp tMINUS exp
+   20    | exp tSTAR exp
+   21    | exp tSLASH exp
+   22    | tINTVAR
+   23    | tID
+
+   24 printf: tPRINTF tPAROPEN tID tPARCLOSED tENDEXPR
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+$end (0) 0
+error (256)
+tMAIN (258) 1
+tINT (259) 3 7 9
+tCONST (260) 9
+tPRINTF (261) 24
+tBRACKETOPEN (262) 1
+tBRACKETCLOSED (263) 1
+tPAROPEN (264) 1 17 24
+tPARCLOSED (265) 1 17 24
+tAFFECT (266) 10 13 15
+tPLUS (267) 18
+tMINUS (268) 19
+tSTAR (269) 20
+tSLASH (270) 21
+tCOMMA (271) 12 13
+tENDEXPR (272) 10 11 15 24
+tINTVAR (273) 10 13 22
+tID (274) 10 11 12 13 15 23 24
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+$accept (20)
+    à gauche: 0
+start (21)
+    à gauche: 1, à droite: 0
+mainArg (22)
+    à gauche: 2 3, à droite: 1
+mainBody (23)
+    à gauche: 4, à droite: 1
+declare (24)
+    à gauche: 5 7 9, à droite: 4 7 9
+$@1 (25)
+    à gauche: 6, à droite: 7
+$@2 (26)
+    à gauche: 8, à droite: 9
+declBody (27)
+    à gauche: 10 11 12 13, à droite: 7 9 12 13
+affect (28)
+    à gauche: 14 15 16, à droite: 4 15 16
+exp (29)
+    à gauche: 17 18 19 20 21 22 23, à droite: 15 17 18 19 20 21
+printf (30)
+    à gauche: 24, à droite: 16
+
+
+État 0
+
+    0 $accept: . start $end
+
+    tMAIN  décalage et aller à l'état 1
+
+    start  aller à l'état 2
+
+
+État 1
+
+    1 start: tMAIN . tPAROPEN mainArg tPARCLOSED tBRACKETOPEN mainBody tBRACKETCLOSED
+
+    tPAROPEN  décalage et aller à l'état 3
+
+
+État 2
+
+    0 $accept: start . $end
+
+    $end  décalage et aller à l'état 4
+
+
+État 3
+
+    1 start: tMAIN tPAROPEN . mainArg tPARCLOSED tBRACKETOPEN mainBody tBRACKETCLOSED
+
+    tINT  décalage et aller à l'état 5
+
+    $défaut  réduction par utilisation de la règle 2 (mainArg)
+
+    mainArg  aller à l'état 6
+
+
+État 4
+
+    0 $accept: start $end .
+
+    $défaut  accepter
+
+
+État 5
+
+    3 mainArg: tINT .
+
+    $défaut  réduction par utilisation de la règle 3 (mainArg)
+
+
+État 6
+
+    1 start: tMAIN tPAROPEN mainArg . tPARCLOSED tBRACKETOPEN mainBody tBRACKETCLOSED
+
+    tPARCLOSED  décalage et aller à l'état 7
+
+
+État 7
+
+    1 start: tMAIN tPAROPEN mainArg tPARCLOSED . tBRACKETOPEN mainBody tBRACKETCLOSED
+
+    tBRACKETOPEN  décalage et aller à l'état 8
+
+
+État 8
+
+    1 start: tMAIN tPAROPEN mainArg tPARCLOSED tBRACKETOPEN . mainBody tBRACKETCLOSED
+
+    tINT    décalage et aller à l'état 9
+    tCONST  décalage et aller à l'état 10
+
+    $défaut  réduction par utilisation de la règle 5 (declare)
+
+    mainBody  aller à l'état 11
+    declare   aller à l'état 12
+
+
+État 9
+
+    7 declare: tINT . $@1 declBody declare
+
+    $défaut  réduction par utilisation de la règle 6 ($@1)
+
+    $@1  aller à l'état 13
+
+
+État 10
+
+    9 declare: tCONST . tINT $@2 declBody declare
+
+    tINT  décalage et aller à l'état 14
+
+
+État 11
+
+    1 start: tMAIN tPAROPEN mainArg tPARCLOSED tBRACKETOPEN mainBody . tBRACKETCLOSED
+
+    tBRACKETCLOSED  décalage et aller à l'état 15
+
+
+État 12
+
+    4 mainBody: declare . affect
+
+    tPRINTF  décalage et aller à l'état 16
+    tID      décalage et aller à l'état 17
+
+    $défaut  réduction par utilisation de la règle 14 (affect)
+
+    affect  aller à l'état 18
+    printf  aller à l'état 19
+
+
+État 13
+
+    7 declare: tINT $@1 . declBody declare
+
+    tID  décalage et aller à l'état 20
+
+    declBody  aller à l'état 21
+
+
+État 14
+
+    9 declare: tCONST tINT . $@2 declBody declare
+
+    $défaut  réduction par utilisation de la règle 8 ($@2)
+
+    $@2  aller à l'état 22
+
+
+État 15
+
+    1 start: tMAIN tPAROPEN mainArg tPARCLOSED tBRACKETOPEN mainBody tBRACKETCLOSED .
+
+    $défaut  réduction par utilisation de la règle 1 (start)
+
+
+État 16
+
+   24 printf: tPRINTF . tPAROPEN tID tPARCLOSED tENDEXPR
+
+    tPAROPEN  décalage et aller à l'état 23
+
+
+État 17
+
+   15 affect: tID . tAFFECT exp tENDEXPR affect
+
+    tAFFECT  décalage et aller à l'état 24
+
+
+État 18
+
+    4 mainBody: declare affect .
+
+    $défaut  réduction par utilisation de la règle 4 (mainBody)
+
+
+État 19
+
+   16 affect: printf . affect
+
+    tPRINTF  décalage et aller à l'état 16
+    tID      décalage et aller à l'état 17
+
+    $défaut  réduction par utilisation de la règle 14 (affect)
+
+    affect  aller à l'état 25
+    printf  aller à l'état 19
+
+
+État 20
+
+   10 declBody: tID . tAFFECT tINTVAR tENDEXPR
+   11         | tID . tENDEXPR
+   12         | tID . tCOMMA declBody
+   13         | tID . tAFFECT tINTVAR tCOMMA declBody
+
+    tAFFECT   décalage et aller à l'état 26
+    tCOMMA    décalage et aller à l'état 27
+    tENDEXPR  décalage et aller à l'état 28
+
+
+État 21
+
+    7 declare: tINT $@1 declBody . declare
+
+    tINT    décalage et aller à l'état 9
+    tCONST  décalage et aller à l'état 10
+
+    $défaut  réduction par utilisation de la règle 5 (declare)
+
+    declare  aller à l'état 29
+
+
+État 22
+
+    9 declare: tCONST tINT $@2 . declBody declare
+
+    tID  décalage et aller à l'état 20
+
+    declBody  aller à l'état 30
+
+
+État 23
+
+   24 printf: tPRINTF tPAROPEN . tID tPARCLOSED tENDEXPR
+
+    tID  décalage et aller à l'état 31
+
+
+État 24
+
+   15 affect: tID tAFFECT . exp tENDEXPR affect
+
+    tPAROPEN  décalage et aller à l'état 32
+    tINTVAR   décalage et aller à l'état 33
+    tID       décalage et aller à l'état 34
+
+    exp  aller à l'état 35
+
+
+État 25
+
+   16 affect: printf affect .
+
+    $défaut  réduction par utilisation de la règle 16 (affect)
+
+
+État 26
+
+   10 declBody: tID tAFFECT . tINTVAR tENDEXPR
+   13         | tID tAFFECT . tINTVAR tCOMMA declBody
+
+    tINTVAR  décalage et aller à l'état 36
+
+
+État 27
+
+   12 declBody: tID tCOMMA . declBody
+
+    tID  décalage et aller à l'état 20
+
+    declBody  aller à l'état 37
+
+
+État 28
+
+   11 declBody: tID tENDEXPR .
+
+    $défaut  réduction par utilisation de la règle 11 (declBody)
+
+
+État 29
+
+    7 declare: tINT $@1 declBody declare .
+
+    $défaut  réduction par utilisation de la règle 7 (declare)
+
+
+État 30
+
+    9 declare: tCONST tINT $@2 declBody . declare
+
+    tINT    décalage et aller à l'état 9
+    tCONST  décalage et aller à l'état 10
+
+    $défaut  réduction par utilisation de la règle 5 (declare)
+
+    declare  aller à l'état 38
+
+
+État 31
+
+   24 printf: tPRINTF tPAROPEN tID . tPARCLOSED tENDEXPR
+
+    tPARCLOSED  décalage et aller à l'état 39
+
+
+État 32
+
+   17 exp: tPAROPEN . exp tPARCLOSED
+
+    tPAROPEN  décalage et aller à l'état 32
+    tINTVAR   décalage et aller à l'état 33
+    tID       décalage et aller à l'état 34
+
+    exp  aller à l'état 40
+
+
+État 33
+
+   22 exp: tINTVAR .
+
+    $défaut  réduction par utilisation de la règle 22 (exp)
+
+
+État 34
+
+   23 exp: tID .
+
+    $défaut  réduction par utilisation de la règle 23 (exp)
+
+
+État 35
+
+   15 affect: tID tAFFECT exp . tENDEXPR affect
+   18 exp: exp . tPLUS exp
+   19    | exp . tMINUS exp
+   20    | exp . tSTAR exp
+   21    | exp . tSLASH exp
+
+    tPLUS     décalage et aller à l'état 41
+    tMINUS    décalage et aller à l'état 42
+    tSTAR     décalage et aller à l'état 43
+    tSLASH    décalage et aller à l'état 44
+    tENDEXPR  décalage et aller à l'état 45
+
+
+État 36
+
+   10 declBody: tID tAFFECT tINTVAR . tENDEXPR
+   13         | tID tAFFECT tINTVAR . tCOMMA declBody
+
+    tCOMMA    décalage et aller à l'état 46
+    tENDEXPR  décalage et aller à l'état 47
+
+
+État 37
+
+   12 declBody: tID tCOMMA declBody .
+
+    $défaut  réduction par utilisation de la règle 12 (declBody)
+
+
+État 38
+
+    9 declare: tCONST tINT $@2 declBody declare .
+
+    $défaut  réduction par utilisation de la règle 9 (declare)
+
+
+État 39
+
+   24 printf: tPRINTF tPAROPEN tID tPARCLOSED . tENDEXPR
+
+    tENDEXPR  décalage et aller à l'état 48
+
+
+État 40
+
+   17 exp: tPAROPEN exp . tPARCLOSED
+   18    | exp . tPLUS exp
+   19    | exp . tMINUS exp
+   20    | exp . tSTAR exp
+   21    | exp . tSLASH exp
+
+    tPARCLOSED  décalage et aller à l'état 49
+    tPLUS       décalage et aller à l'état 41
+    tMINUS      décalage et aller à l'état 42
+    tSTAR       décalage et aller à l'état 43
+    tSLASH      décalage et aller à l'état 44
+
+
+État 41
+
+   18 exp: exp tPLUS . exp
+
+    tPAROPEN  décalage et aller à l'état 32
+    tINTVAR   décalage et aller à l'état 33
+    tID       décalage et aller à l'état 34
+
+    exp  aller à l'état 50
+
+
+État 42
+
+   19 exp: exp tMINUS . exp
+
+    tPAROPEN  décalage et aller à l'état 32
+    tINTVAR   décalage et aller à l'état 33
+    tID       décalage et aller à l'état 34
+
+    exp  aller à l'état 51
+
+
+État 43
+
+   20 exp: exp tSTAR . exp
+
+    tPAROPEN  décalage et aller à l'état 32
+    tINTVAR   décalage et aller à l'état 33
+    tID       décalage et aller à l'état 34
+
+    exp  aller à l'état 52
+
+
+État 44
+
+   21 exp: exp tSLASH . exp
+
+    tPAROPEN  décalage et aller à l'état 32
+    tINTVAR   décalage et aller à l'état 33
+    tID       décalage et aller à l'état 34
+
+    exp  aller à l'état 53
+
+
+État 45
+
+   15 affect: tID tAFFECT exp tENDEXPR . affect
+
+    tPRINTF  décalage et aller à l'état 16
+    tID      décalage et aller à l'état 17
+
+    $défaut  réduction par utilisation de la règle 14 (affect)
+
+    affect  aller à l'état 54
+    printf  aller à l'état 19
+
+
+État 46
+
+   13 declBody: tID tAFFECT tINTVAR tCOMMA . declBody
+
+    tID  décalage et aller à l'état 20
+
+    declBody  aller à l'état 55
+
+
+État 47
+
+   10 declBody: tID tAFFECT tINTVAR tENDEXPR .
+
+    $défaut  réduction par utilisation de la règle 10 (declBody)
+
+
+État 48
+
+   24 printf: tPRINTF tPAROPEN tID tPARCLOSED tENDEXPR .
+
+    $défaut  réduction par utilisation de la règle 24 (printf)
+
+
+État 49
+
+   17 exp: tPAROPEN exp tPARCLOSED .
+
+    $défaut  réduction par utilisation de la règle 17 (exp)
+
+
+État 50
+
+   18 exp: exp . tPLUS exp
+   18    | exp tPLUS exp .
+   19    | exp . tMINUS exp
+   20    | exp . tSTAR exp
+   21    | exp . tSLASH exp
+
+    tSTAR   décalage et aller à l'état 43
+    tSLASH  décalage et aller à l'état 44
+
+    $défaut  réduction par utilisation de la règle 18 (exp)
+
+
+État 51
+
+   18 exp: exp . tPLUS exp
+   19    | exp . tMINUS exp
+   19    | exp tMINUS exp .
+   20    | exp . tSTAR exp
+   21    | exp . tSLASH exp
+
+    tSTAR   décalage et aller à l'état 43
+    tSLASH  décalage et aller à l'état 44
+
+    $défaut  réduction par utilisation de la règle 19 (exp)
+
+
+État 52
+
+   18 exp: exp . tPLUS exp
+   19    | exp . tMINUS exp
+   20    | exp . tSTAR exp
+   20    | exp tSTAR exp .
+   21    | exp . tSLASH exp
+
+    $défaut  réduction par utilisation de la règle 20 (exp)
+
+
+État 53
+
+   18 exp: exp . tPLUS exp
+   19    | exp . tMINUS exp
+   20    | exp . tSTAR exp
+   21    | exp . tSLASH exp
+   21    | exp tSLASH exp .
+
+    $défaut  réduction par utilisation de la règle 21 (exp)
+
+
+État 54
+
+   15 affect: tID tAFFECT exp tENDEXPR affect .
+
+    $défaut  réduction par utilisation de la règle 15 (affect)
+
+
+État 55
+
+   13 declBody: tID tAFFECT tINTVAR tCOMMA declBody .
+
+    $défaut  réduction par utilisation de la règle 13 (declBody)
