@@ -26,6 +26,12 @@ int initFromSymbol(struct line * tab, int * tabIndex, char * id);
 //Returns address from element given its ID
 int addrFromSymbol(struct line * tab, int * tabIndex, char * id);
 
+//Removes all symbols from the table with a given ID
+int removeSymbolFromDepth(struct line * tab, int * tabIndex, int depth, int * currentAddr);
+
+//Update the value of init for a given symbol
+void updateInitSymbol(struct line * tab, int * tabIndex, char * id);
+
 //Prints table
 void printTable(struct line * tab, int * tabIndex);
 

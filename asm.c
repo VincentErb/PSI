@@ -27,6 +27,11 @@ void addInstruct(struct tabInstruct * tab, int * tabIndex, char * op,int ra,int 
 	*(tabIndex) += 1;
 }
 
+void updateInstruct(struct tabInstruct * tab, int * indexInst, int targetInst){
+	tab[targetInst].ra = (*indexInst) ;
+
+}
+
 void printInstruct(struct tabInstruct * tab, int * tabIndex){
 	for (int i=0;i<(*tabIndex);i++){
 		printf("%s %d %d %d\n",

@@ -11,7 +11,7 @@
 "printf" {return tPRINTF;}
 "while" {return tWHILE;}
 "if" {return tIF;}
-"and" {return tAND;}
+"!=" {return tDIFF;}
 "!" {return tNOT;}
 "<" {return tINF;}
 "{" {return tBRACKETOPEN;}

@@ -35,6 +35,22 @@ while adr < len(ins):
 	elif ins[adr][0] == "PRINT":
 		print(reg[ins[adr][1]])
 		adr += 1
+	elif ins[adr][0] == "DIFZ":
+		reg[ins[adr][1]] = reg[ins[adr][1]] != 0
+		adr += 1
+
+	elif ins[adr][0] == "NOT":
+		reg[ins[adr][1]] = not(reg[ins[adr][1]]) 
+		adr += 1
+
+	elif ins[adr][0] == "INF":
+		reg[ins[adr][1]] = reg[ins[adr][2]] < reg[ins[adr][3]]
+		adr += 1
+	
+	elif ins[adr][0] == "JMPC":
+		print("JUMP to " + str(ins[adr][1]))
+		adr += 1
+		
 	
 	
 

@@ -56,7 +56,27 @@ int addrFromSymbol(struct line * tab, int * tabIndex, char * id){
 	return -1; 
 }
 
+int pop(int * tabIndex, int * currentAddr){
+	*(currentAddr) = (*currentAddr) - 4;
+	*(tabIndex) -= 1;
+	return (*currentAddr);
+}
 
+
+int removeSymbolFromDepth(struct line * tab, int * tabIndex, int depth, int * currentAddr){
+	for (int i=0; i < (*tabIndex); i++){
+		if (tab[i].depth == depth) {
+			pop(tabIndex,currentAddr);
+		}  
+	} 
+	return -1; 
+}
+
+void updateInitSymbol(struct line * tab, int * tabIndex, char * id){
+	int i = findSymbole(tab, tabIndex, id);
+	tab[i].intInit = 1;
+
+}
 
 
 int addSymbole(struct line * tab, int * tabIndex, 
@@ -93,11 +113,6 @@ int addTemp(struct line * tab, int * tabIndex, int * currentAddr){
 }
 
 
-int pop(int * tabIndex, int * currentAddr){
-	*(currentAddr) = (*currentAddr) - 4;
-	*(tabIndex) -= 1;
-	return (*currentAddr);
-}
 
 
 

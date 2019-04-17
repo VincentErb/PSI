@@ -30,26 +30,24 @@ Grammaire
 
    18 $@3: %empty
 
-   19 if: tIF cond tBRACKETOPEN $@3 instructions tBRACKETCLOSED
+   19 $@4: %empty
 
-   20 $@4: %empty
+   20 if: tIF exp $@3 tBRACKETOPEN $@4 instructions tBRACKETCLOSED
 
-   21 while: tWHILE cond tBRACKETOPEN $@4 instructions tBRACKETCLOSED
+   21 $@5: %empty
 
-   22 cond: tPAROPEN cond tPARCLOSED
-   23     | tID
-   24     | tINTVAR
-   25     | cond tAND cond
-   26     | tNOT cond
-   27     | cond tINF cond
+   22 while: tWHILE exp tBRACKETOPEN $@5 instructions tBRACKETCLOSED
 
-   28 exp: tPAROPEN exp tPARCLOSED
-   29    | exp tPLUS exp
-   30    | exp tMINUS exp
-   31    | exp tSTAR exp
-   32    | exp tSLASH exp
-   33    | tINTVAR
-   34    | tID
+   23 exp: tPAROPEN exp tPARCLOSED
+   24    | exp tPLUS exp
+   25    | exp tMINUS exp
+   26    | exp tSTAR exp
+   27    | exp tSLASH exp
+   28    | exp tDIFF exp
+   29    | tNOT exp
+   30    | exp tINF exp
+   31    | tINTVAR
+   32    | tID
 
 
 Terminaux, suivis des règles où ils apparaissent
@@ -60,24 +58,24 @@ tMAIN (258) 1
 tINT (259) 3 11 13
 tCONST (260) 13
 tPRINTF (261) 7
-tBRACKETOPEN (262) 1 19 21
-tBRACKETCLOSED (263) 1 19 21
-tPAROPEN (264) 1 7 22 28
-tPARCLOSED (265) 1 7 22 28
+tBRACKETOPEN (262) 1 20 22
+tBRACKETCLOSED (263) 1 20 22
+tPAROPEN (264) 1 7 23
+tPARCLOSED (265) 1 7 23
 tAFFECT (266) 6 14 17
-tPLUS (267) 29
-tMINUS (268) 30
-tSTAR (269) 31
-tSLASH (270) 32
+tPLUS (267) 24
+tMINUS (268) 25
+tSTAR (269) 26
+tSLASH (270) 27
 tCOMMA (271) 16 17
 tENDEXPR (272) 6 7 14 15
-tINTVAR (273) 14 17 24 33
-tID (274) 6 7 14 15 16 17 23 34
-tIF (275) 19
-tNOT (276) 26
-tAND (277) 25
-tINF (278) 27
-tWHILE (279) 21
+tINTVAR (273) 14 17 31
+tID (274) 6 7 14 15 16 17 32
+tIF (275) 20
+tNOT (276) 29
+tDIFF (277) 28
+tINF (278) 30
+tWHILE (279) 22
 
 
 Non-terminaux, suivis des règles où ils apparaissent
@@ -89,7 +87,7 @@ start (26)
 mainArg (27)
     à gauche: 2 3, à droite: 1
 instructions (28)
-    à gauche: 4 5, à droite: 1 4 19 21
+    à gauche: 4 5, à droite: 1 4 20 22
 instruction (29)
     à gauche: 6 7 8 9 11 13, à droite: 4
 $@1 (30)
@@ -99,17 +97,18 @@ $@2 (31)
 declBody (32)
     à gauche: 14 15 16 17, à droite: 11 13 16 17
 if (33)
-    à gauche: 19, à droite: 8
+    à gauche: 20, à droite: 8
 $@3 (34)
-    à gauche: 18, à droite: 19
-while (35)
-    à gauche: 21, à droite: 9
-$@4 (36)
-    à gauche: 20, à droite: 21
-cond (37)
-    à gauche: 22 23 24 25 26 27, à droite: 19 21 22 25 26 27
+    à gauche: 18, à droite: 20
+$@4 (35)
+    à gauche: 19, à droite: 20
+while (36)
+    à gauche: 22, à droite: 9
+$@5 (37)
+    à gauche: 21, à droite: 22
 exp (38)
-    à gauche: 28 29 30 31 32 33 34, à droite: 6 28 29 30 31 32
+    à gauche: 23 24 25 26 27 28 29 30 31 32, à droite: 6 20 22 23
+    24 25 26 27 28 29 30
 
 
 État 0
@@ -225,26 +224,26 @@ exp (38)
 
 État 13
 
-   19 if: tIF . cond tBRACKETOPEN $@3 instructions tBRACKETCLOSED
+   20 if: tIF . exp $@3 tBRACKETOPEN $@4 instructions tBRACKETCLOSED
 
     tPAROPEN  décalage et aller à l'état 23
     tINTVAR   décalage et aller à l'état 24
     tID       décalage et aller à l'état 25
     tNOT      décalage et aller à l'état 26
 
-    cond  aller à l'état 27
+    exp  aller à l'état 27
 
 
 État 14
 
-   21 while: tWHILE . cond tBRACKETOPEN $@4 instructions tBRACKETCLOSED
+   22 while: tWHILE . exp tBRACKETOPEN $@5 instructions tBRACKETCLOSED
 
     tPAROPEN  décalage et aller à l'état 23
     tINTVAR   décalage et aller à l'état 24
     tID       décalage et aller à l'état 25
     tNOT      décalage et aller à l'état 26
 
-    cond  aller à l'état 28
+    exp  aller à l'état 28
 
 
 État 15
@@ -316,70 +315,90 @@ exp (38)
 
     6 instruction: tID tAFFECT . exp tENDEXPR
 
-    tPAROPEN  décalage et aller à l'état 35
-    tINTVAR   décalage et aller à l'état 36
-    tID       décalage et aller à l'état 37
+    tPAROPEN  décalage et aller à l'état 23
+    tINTVAR   décalage et aller à l'état 24
+    tID       décalage et aller à l'état 25
+    tNOT      décalage et aller à l'état 26
 
-    exp  aller à l'état 38
+    exp  aller à l'état 35
 
 
 État 23
 
-   22 cond: tPAROPEN . cond tPARCLOSED
+   23 exp: tPAROPEN . exp tPARCLOSED
 
     tPAROPEN  décalage et aller à l'état 23
     tINTVAR   décalage et aller à l'état 24
     tID       décalage et aller à l'état 25
     tNOT      décalage et aller à l'état 26
 
-    cond  aller à l'état 39
+    exp  aller à l'état 36
 
 
 État 24
 
-   24 cond: tINTVAR .
+   31 exp: tINTVAR .
 
-    $défaut  réduction par utilisation de la règle 24 (cond)
+    $défaut  réduction par utilisation de la règle 31 (exp)
 
 
 État 25
 
-   23 cond: tID .
+   32 exp: tID .
 
-    $défaut  réduction par utilisation de la règle 23 (cond)
+    $défaut  réduction par utilisation de la règle 32 (exp)
 
 
 État 26
 
-   26 cond: tNOT . cond
+   29 exp: tNOT . exp
 
     tPAROPEN  décalage et aller à l'état 23
     tINTVAR   décalage et aller à l'état 24
     tID       décalage et aller à l'état 25
     tNOT      décalage et aller à l'état 26
 
-    cond  aller à l'état 40
+    exp  aller à l'état 37
 
 
 État 27
 
-   19 if: tIF cond . tBRACKETOPEN $@3 instructions tBRACKETCLOSED
-   25 cond: cond . tAND cond
-   27     | cond . tINF cond
+   20 if: tIF exp . $@3 tBRACKETOPEN $@4 instructions tBRACKETCLOSED
+   24 exp: exp . tPLUS exp
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   30    | exp . tINF exp
 
-    tBRACKETOPEN  décalage et aller à l'état 41
-    tAND          décalage et aller à l'état 42
-    tINF          décalage et aller à l'état 43
+    tPLUS   décalage et aller à l'état 38
+    tMINUS  décalage et aller à l'état 39
+    tSTAR   décalage et aller à l'état 40
+    tSLASH  décalage et aller à l'état 41
+    tDIFF   décalage et aller à l'état 42
+    tINF    décalage et aller à l'état 43
+
+    $défaut  réduction par utilisation de la règle 18 ($@3)
+
+    $@3  aller à l'état 44
 
 
 État 28
 
-   21 while: tWHILE cond . tBRACKETOPEN $@4 instructions tBRACKETCLOSED
-   25 cond: cond . tAND cond
-   27     | cond . tINF cond
+   22 while: tWHILE exp . tBRACKETOPEN $@5 instructions tBRACKETCLOSED
+   24 exp: exp . tPLUS exp
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   30    | exp . tINF exp
 
-    tBRACKETOPEN  décalage et aller à l'état 44
-    tAND          décalage et aller à l'état 42
+    tBRACKETOPEN  décalage et aller à l'état 45
+    tPLUS         décalage et aller à l'état 38
+    tMINUS        décalage et aller à l'état 39
+    tSTAR         décalage et aller à l'état 40
+    tSLASH        décalage et aller à l'état 41
+    tDIFF         décalage et aller à l'état 42
     tINF          décalage et aller à l'état 43
 
 
@@ -404,9 +423,9 @@ exp (38)
    16         | tID . tCOMMA declBody
    17         | tID . tAFFECT tINTVAR tCOMMA declBody
 
-    tAFFECT   décalage et aller à l'état 45
-    tCOMMA    décalage et aller à l'état 46
-    tENDEXPR  décalage et aller à l'état 47
+    tAFFECT   décalage et aller à l'état 46
+    tCOMMA    décalage et aller à l'état 47
+    tENDEXPR  décalage et aller à l'état 48
 
 
 État 32
@@ -422,119 +441,156 @@ exp (38)
 
     tID  décalage et aller à l'état 31
 
-    declBody  aller à l'état 48
+    declBody  aller à l'état 49
 
 
 État 34
 
     7 instruction: tPRINTF tPAROPEN tID . tPARCLOSED tENDEXPR
 
-    tPARCLOSED  décalage et aller à l'état 49
+    tPARCLOSED  décalage et aller à l'état 50
 
 
 État 35
 
-   28 exp: tPAROPEN . exp tPARCLOSED
+    6 instruction: tID tAFFECT exp . tENDEXPR
+   24 exp: exp . tPLUS exp
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   30    | exp . tINF exp
 
-    tPAROPEN  décalage et aller à l'état 35
-    tINTVAR   décalage et aller à l'état 36
-    tID       décalage et aller à l'état 37
-
-    exp  aller à l'état 50
+    tPLUS     décalage et aller à l'état 38
+    tMINUS    décalage et aller à l'état 39
+    tSTAR     décalage et aller à l'état 40
+    tSLASH    décalage et aller à l'état 41
+    tENDEXPR  décalage et aller à l'état 51
+    tDIFF     décalage et aller à l'état 42
+    tINF      décalage et aller à l'état 43
 
 
 État 36
 
-   33 exp: tINTVAR .
+   23 exp: tPAROPEN exp . tPARCLOSED
+   24    | exp . tPLUS exp
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   30    | exp . tINF exp
 
-    $défaut  réduction par utilisation de la règle 33 (exp)
+    tPARCLOSED  décalage et aller à l'état 52
+    tPLUS       décalage et aller à l'état 38
+    tMINUS      décalage et aller à l'état 39
+    tSTAR       décalage et aller à l'état 40
+    tSLASH      décalage et aller à l'état 41
+    tDIFF       décalage et aller à l'état 42
+    tINF        décalage et aller à l'état 43
 
 
 État 37
 
-   34 exp: tID .
+   24 exp: exp . tPLUS exp
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   29    | tNOT exp .
+   30    | exp . tINF exp
 
-    $défaut  réduction par utilisation de la règle 34 (exp)
+    $défaut  réduction par utilisation de la règle 29 (exp)
 
 
 État 38
 
-    6 instruction: tID tAFFECT exp . tENDEXPR
-   29 exp: exp . tPLUS exp
-   30    | exp . tMINUS exp
-   31    | exp . tSTAR exp
-   32    | exp . tSLASH exp
+   24 exp: exp tPLUS . exp
 
-    tPLUS     décalage et aller à l'état 51
-    tMINUS    décalage et aller à l'état 52
-    tSTAR     décalage et aller à l'état 53
-    tSLASH    décalage et aller à l'état 54
-    tENDEXPR  décalage et aller à l'état 55
+    tPAROPEN  décalage et aller à l'état 23
+    tINTVAR   décalage et aller à l'état 24
+    tID       décalage et aller à l'état 25
+    tNOT      décalage et aller à l'état 26
+
+    exp  aller à l'état 53
 
 
 État 39
 
-   22 cond: tPAROPEN cond . tPARCLOSED
-   25     | cond . tAND cond
-   27     | cond . tINF cond
+   25 exp: exp tMINUS . exp
 
-    tPARCLOSED  décalage et aller à l'état 56
-    tAND        décalage et aller à l'état 42
-    tINF        décalage et aller à l'état 43
+    tPAROPEN  décalage et aller à l'état 23
+    tINTVAR   décalage et aller à l'état 24
+    tID       décalage et aller à l'état 25
+    tNOT      décalage et aller à l'état 26
+
+    exp  aller à l'état 54
 
 
 État 40
 
-   25 cond: cond . tAND cond
-   26     | tNOT cond .
-   27     | cond . tINF cond
+   26 exp: exp tSTAR . exp
 
-    $défaut  réduction par utilisation de la règle 26 (cond)
+    tPAROPEN  décalage et aller à l'état 23
+    tINTVAR   décalage et aller à l'état 24
+    tID       décalage et aller à l'état 25
+    tNOT      décalage et aller à l'état 26
+
+    exp  aller à l'état 55
 
 
 État 41
 
-   19 if: tIF cond tBRACKETOPEN . $@3 instructions tBRACKETCLOSED
+   27 exp: exp tSLASH . exp
 
-    $défaut  réduction par utilisation de la règle 18 ($@3)
+    tPAROPEN  décalage et aller à l'état 23
+    tINTVAR   décalage et aller à l'état 24
+    tID       décalage et aller à l'état 25
+    tNOT      décalage et aller à l'état 26
 
-    $@3  aller à l'état 57
+    exp  aller à l'état 56
 
 
 État 42
 
-   25 cond: cond tAND . cond
+   28 exp: exp tDIFF . exp
 
     tPAROPEN  décalage et aller à l'état 23
     tINTVAR   décalage et aller à l'état 24
     tID       décalage et aller à l'état 25
     tNOT      décalage et aller à l'état 26
 
-    cond  aller à l'état 58
+    exp  aller à l'état 57
 
 
 État 43
 
-   27 cond: cond tINF . cond
+   30 exp: exp tINF . exp
 
     tPAROPEN  décalage et aller à l'état 23
     tINTVAR   décalage et aller à l'état 24
     tID       décalage et aller à l'état 25
     tNOT      décalage et aller à l'état 26
 
-    cond  aller à l'état 59
+    exp  aller à l'état 58
 
 
 État 44
 
-   21 while: tWHILE cond tBRACKETOPEN . $@4 instructions tBRACKETCLOSED
+   20 if: tIF exp $@3 . tBRACKETOPEN $@4 instructions tBRACKETCLOSED
 
-    $défaut  réduction par utilisation de la règle 20 ($@4)
-
-    $@4  aller à l'état 60
+    tBRACKETOPEN  décalage et aller à l'état 59
 
 
 État 45
+
+   22 while: tWHILE exp tBRACKETOPEN . $@5 instructions tBRACKETCLOSED
+
+    $défaut  réduction par utilisation de la règle 21 ($@5)
+
+    $@5  aller à l'état 60
+
+
+État 46
 
    14 declBody: tID tAFFECT . tINTVAR tENDEXPR
    17         | tID tAFFECT . tINTVAR tCOMMA declBody
@@ -542,7 +598,7 @@ exp (38)
     tINTVAR  décalage et aller à l'état 61
 
 
-État 46
+État 47
 
    16 declBody: tID tCOMMA . declBody
 
@@ -551,142 +607,147 @@ exp (38)
     declBody  aller à l'état 62
 
 
-État 47
+État 48
 
    15 declBody: tID tENDEXPR .
 
     $défaut  réduction par utilisation de la règle 15 (declBody)
 
 
-État 48
+État 49
 
    13 instruction: tCONST tINT $@2 declBody .
 
     $défaut  réduction par utilisation de la règle 13 (instruction)
 
 
-État 49
+État 50
 
     7 instruction: tPRINTF tPAROPEN tID tPARCLOSED . tENDEXPR
 
     tENDEXPR  décalage et aller à l'état 63
 
 
-État 50
-
-   28 exp: tPAROPEN exp . tPARCLOSED
-   29    | exp . tPLUS exp
-   30    | exp . tMINUS exp
-   31    | exp . tSTAR exp
-   32    | exp . tSLASH exp
-
-    tPARCLOSED  décalage et aller à l'état 64
-    tPLUS       décalage et aller à l'état 51
-    tMINUS      décalage et aller à l'état 52
-    tSTAR       décalage et aller à l'état 53
-    tSLASH      décalage et aller à l'état 54
-
-
 État 51
-
-   29 exp: exp tPLUS . exp
-
-    tPAROPEN  décalage et aller à l'état 35
-    tINTVAR   décalage et aller à l'état 36
-    tID       décalage et aller à l'état 37
-
-    exp  aller à l'état 65
-
-
-État 52
-
-   30 exp: exp tMINUS . exp
-
-    tPAROPEN  décalage et aller à l'état 35
-    tINTVAR   décalage et aller à l'état 36
-    tID       décalage et aller à l'état 37
-
-    exp  aller à l'état 66
-
-
-État 53
-
-   31 exp: exp tSTAR . exp
-
-    tPAROPEN  décalage et aller à l'état 35
-    tINTVAR   décalage et aller à l'état 36
-    tID       décalage et aller à l'état 37
-
-    exp  aller à l'état 67
-
-
-État 54
-
-   32 exp: exp tSLASH . exp
-
-    tPAROPEN  décalage et aller à l'état 35
-    tINTVAR   décalage et aller à l'état 36
-    tID       décalage et aller à l'état 37
-
-    exp  aller à l'état 68
-
-
-État 55
 
     6 instruction: tID tAFFECT exp tENDEXPR .
 
     $défaut  réduction par utilisation de la règle 6 (instruction)
 
 
+État 52
+
+   23 exp: tPAROPEN exp tPARCLOSED .
+
+    $défaut  réduction par utilisation de la règle 23 (exp)
+
+
+État 53
+
+   24 exp: exp . tPLUS exp
+   24    | exp tPLUS exp .
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   30    | exp . tINF exp
+
+    tSTAR   décalage et aller à l'état 40
+    tSLASH  décalage et aller à l'état 41
+    tDIFF   décalage et aller à l'état 42
+    tINF    décalage et aller à l'état 43
+
+    $défaut  réduction par utilisation de la règle 24 (exp)
+
+
+État 54
+
+   24 exp: exp . tPLUS exp
+   25    | exp . tMINUS exp
+   25    | exp tMINUS exp .
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   30    | exp . tINF exp
+
+    tSTAR   décalage et aller à l'état 40
+    tSLASH  décalage et aller à l'état 41
+    tDIFF   décalage et aller à l'état 42
+    tINF    décalage et aller à l'état 43
+
+    $défaut  réduction par utilisation de la règle 25 (exp)
+
+
+État 55
+
+   24 exp: exp . tPLUS exp
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   26    | exp tSTAR exp .
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   30    | exp . tINF exp
+
+    tDIFF  décalage et aller à l'état 42
+    tINF   décalage et aller à l'état 43
+
+    $défaut  réduction par utilisation de la règle 26 (exp)
+
+
 État 56
 
-   22 cond: tPAROPEN cond tPARCLOSED .
+   24 exp: exp . tPLUS exp
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   27    | exp tSLASH exp .
+   28    | exp . tDIFF exp
+   30    | exp . tINF exp
 
-    $défaut  réduction par utilisation de la règle 22 (cond)
+    tDIFF  décalage et aller à l'état 42
+    tINF   décalage et aller à l'état 43
+
+    $défaut  réduction par utilisation de la règle 27 (exp)
 
 
 État 57
 
-   19 if: tIF cond tBRACKETOPEN $@3 . instructions tBRACKETCLOSED
+   24 exp: exp . tPLUS exp
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   28    | exp tDIFF exp .
+   30    | exp . tINF exp
 
-    tINT     décalage et aller à l'état 9
-    tCONST   décalage et aller à l'état 10
-    tPRINTF  décalage et aller à l'état 11
-    tID      décalage et aller à l'état 12
-    tIF      décalage et aller à l'état 13
-    tWHILE   décalage et aller à l'état 14
-
-    $défaut  réduction par utilisation de la règle 5 (instructions)
-
-    instructions  aller à l'état 69
-    instruction   aller à l'état 16
-    if            aller à l'état 17
-    while         aller à l'état 18
+    $défaut  réduction par utilisation de la règle 28 (exp)
 
 
 État 58
 
-   25 cond: cond . tAND cond
-   25     | cond tAND cond .
-   27     | cond . tINF cond
+   24 exp: exp . tPLUS exp
+   25    | exp . tMINUS exp
+   26    | exp . tSTAR exp
+   27    | exp . tSLASH exp
+   28    | exp . tDIFF exp
+   30    | exp . tINF exp
+   30    | exp tINF exp .
 
-    $défaut  réduction par utilisation de la règle 25 (cond)
+    $défaut  réduction par utilisation de la règle 30 (exp)
 
 
 État 59
 
-   25 cond: cond . tAND cond
-   27     | cond . tINF cond
-   27     | cond tINF cond .
+   20 if: tIF exp $@3 tBRACKETOPEN . $@4 instructions tBRACKETCLOSED
 
-    tAND  décalage et aller à l'état 42
+    $défaut  réduction par utilisation de la règle 19 ($@4)
 
-    $défaut  réduction par utilisation de la règle 27 (cond)
+    $@4  aller à l'état 64
 
 
 État 60
 
-   21 while: tWHILE cond tBRACKETOPEN $@4 . instructions tBRACKETCLOSED
+   22 while: tWHILE exp tBRACKETOPEN $@5 . instructions tBRACKETCLOSED
 
     tINT     décalage et aller à l'état 9
     tCONST   décalage et aller à l'état 10
@@ -697,7 +758,7 @@ exp (38)
 
     $défaut  réduction par utilisation de la règle 5 (instructions)
 
-    instructions  aller à l'état 70
+    instructions  aller à l'état 65
     instruction   aller à l'état 16
     if            aller à l'état 17
     while         aller à l'état 18
@@ -708,8 +769,8 @@ exp (38)
    14 declBody: tID tAFFECT tINTVAR . tENDEXPR
    17         | tID tAFFECT tINTVAR . tCOMMA declBody
 
-    tCOMMA    décalage et aller à l'état 71
-    tENDEXPR  décalage et aller à l'état 72
+    tCOMMA    décalage et aller à l'état 66
+    tENDEXPR  décalage et aller à l'état 67
 
 
 État 62
@@ -728,107 +789,69 @@ exp (38)
 
 État 64
 
-   28 exp: tPAROPEN exp tPARCLOSED .
+   20 if: tIF exp $@3 tBRACKETOPEN $@4 . instructions tBRACKETCLOSED
 
-    $défaut  réduction par utilisation de la règle 28 (exp)
+    tINT     décalage et aller à l'état 9
+    tCONST   décalage et aller à l'état 10
+    tPRINTF  décalage et aller à l'état 11
+    tID      décalage et aller à l'état 12
+    tIF      décalage et aller à l'état 13
+    tWHILE   décalage et aller à l'état 14
+
+    $défaut  réduction par utilisation de la règle 5 (instructions)
+
+    instructions  aller à l'état 68
+    instruction   aller à l'état 16
+    if            aller à l'état 17
+    while         aller à l'état 18
 
 
 État 65
 
-   29 exp: exp . tPLUS exp
-   29    | exp tPLUS exp .
-   30    | exp . tMINUS exp
-   31    | exp . tSTAR exp
-   32    | exp . tSLASH exp
+   22 while: tWHILE exp tBRACKETOPEN $@5 instructions . tBRACKETCLOSED
 
-    tSTAR   décalage et aller à l'état 53
-    tSLASH  décalage et aller à l'état 54
-
-    $défaut  réduction par utilisation de la règle 29 (exp)
+    tBRACKETCLOSED  décalage et aller à l'état 69
 
 
 État 66
-
-   29 exp: exp . tPLUS exp
-   30    | exp . tMINUS exp
-   30    | exp tMINUS exp .
-   31    | exp . tSTAR exp
-   32    | exp . tSLASH exp
-
-    tSTAR   décalage et aller à l'état 53
-    tSLASH  décalage et aller à l'état 54
-
-    $défaut  réduction par utilisation de la règle 30 (exp)
-
-
-État 67
-
-   29 exp: exp . tPLUS exp
-   30    | exp . tMINUS exp
-   31    | exp . tSTAR exp
-   31    | exp tSTAR exp .
-   32    | exp . tSLASH exp
-
-    $défaut  réduction par utilisation de la règle 31 (exp)
-
-
-État 68
-
-   29 exp: exp . tPLUS exp
-   30    | exp . tMINUS exp
-   31    | exp . tSTAR exp
-   32    | exp . tSLASH exp
-   32    | exp tSLASH exp .
-
-    $défaut  réduction par utilisation de la règle 32 (exp)
-
-
-État 69
-
-   19 if: tIF cond tBRACKETOPEN $@3 instructions . tBRACKETCLOSED
-
-    tBRACKETCLOSED  décalage et aller à l'état 73
-
-
-État 70
-
-   21 while: tWHILE cond tBRACKETOPEN $@4 instructions . tBRACKETCLOSED
-
-    tBRACKETCLOSED  décalage et aller à l'état 74
-
-
-État 71
 
    17 declBody: tID tAFFECT tINTVAR tCOMMA . declBody
 
     tID  décalage et aller à l'état 31
 
-    declBody  aller à l'état 75
+    declBody  aller à l'état 70
 
 
-État 72
+État 67
 
    14 declBody: tID tAFFECT tINTVAR tENDEXPR .
 
     $défaut  réduction par utilisation de la règle 14 (declBody)
 
 
-État 73
+État 68
 
-   19 if: tIF cond tBRACKETOPEN $@3 instructions tBRACKETCLOSED .
+   20 if: tIF exp $@3 tBRACKETOPEN $@4 instructions . tBRACKETCLOSED
 
-    $défaut  réduction par utilisation de la règle 19 (if)
-
-
-État 74
-
-   21 while: tWHILE cond tBRACKETOPEN $@4 instructions tBRACKETCLOSED .
-
-    $défaut  réduction par utilisation de la règle 21 (while)
+    tBRACKETCLOSED  décalage et aller à l'état 71
 
 
-État 75
+État 69
+
+   22 while: tWHILE exp tBRACKETOPEN $@5 instructions tBRACKETCLOSED .
+
+    $défaut  réduction par utilisation de la règle 22 (while)
+
+
+État 70
 
    17 declBody: tID tAFFECT tINTVAR tCOMMA declBody .
 
     $défaut  réduction par utilisation de la règle 17 (declBody)
+
+
+État 71
+
+   20 if: tIF exp $@3 tBRACKETOPEN $@4 instructions tBRACKETCLOSED .
+
+    $défaut  réduction par utilisation de la règle 20 (if)

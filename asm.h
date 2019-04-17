@@ -11,4 +11,6 @@ struct tabInstruct {
 //FUNCTIONS 
 void addInstruct(struct tabInstruct * tab, int * tabIndex, char * op,int ra,int rb,int rc);
 
+void updateInstruct(struct tabInstruct * tab, int * indexInst, int targetInst);
+
 void printInstruct(struct tabInstruct * tab, int * tabIndex);

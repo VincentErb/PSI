@@ -64,7 +64,7 @@ extern int yydebug;
     tID = 274,
     tIF = 275,
     tNOT = 276,
-    tAND = 277,
+    tDIFF = 277,
     tINF = 278,
     tWHILE = 279
   };
@@ -89,7 +89,7 @@ extern int yydebug;
 #define tID 274
 #define tIF 275
 #define tNOT 276
-#define tAND 277
+#define tDIFF 277
 #define tINF 278
 #define tWHILE 279
 
@@ -98,7 +98,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 36 "compiler.y" /* yacc.c:1909  */
+#line 38 "compiler.y" /* yacc.c:1909  */
 
 	int e;
 	char * c;
