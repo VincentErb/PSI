@@ -7,11 +7,10 @@ main(){
 	const int g,h,i=8;
 
 	a=3+5;
-	a=b-c;
-	a=3*2+5-3*c-d;
 	a= 3+ (2*4);
 	printf(a);
 	a=3*(5+6) - 2;
 	a = 3 + (5-2) * 6 - d ;
+	printf(a);
 }
 

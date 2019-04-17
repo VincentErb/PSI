@@ -9,3 +9,8 @@ y.tab.c: compiler.y
 
 test: compiler
 	./compiler < testsimple.c
+
+asm: compiler
+	./compiler < testsimple.c > test.s
+
+

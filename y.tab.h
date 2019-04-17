@@ -61,7 +61,12 @@ extern int yydebug;
     tCOMMA = 271,
     tENDEXPR = 272,
     tINTVAR = 273,
-    tID = 274
+    tID = 274,
+    tIF = 275,
+    tNOT = 276,
+    tAND = 277,
+    tINF = 278,
+    tWHILE = 279
   };
 #endif
 /* Tokens.  */
@@ -82,18 +87,23 @@ extern int yydebug;
 #define tENDEXPR 272
 #define tINTVAR 273
 #define tID 274
+#define tIF 275
+#define tNOT 276
+#define tAND 277
+#define tINF 278
+#define tWHILE 279
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 30 "compiler.y" /* yacc.c:1909  */
+#line 36 "compiler.y" /* yacc.c:1909  */
 
 	int e;
 	char * c;
 
-#line 97 "y.tab.h" /* yacc.c:1909  */
+#line 107 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

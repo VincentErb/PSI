@@ -9,6 +9,11 @@
 "int" {return tINT;}
 "const" {return tCONST;}
 "printf" {return tPRINTF;}
+"while" {return tWHILE;}
+"if" {return tIF;}
+"and" {return tAND;}
+"!" {return tNOT;}
+"<" {return tINF;}
 "{" {return tBRACKETOPEN;}
 "}" {return tBRACKETCLOSED;}
 "(" {return tPAROPEN;}

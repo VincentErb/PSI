@@ -28,15 +28,8 @@ void addInstruct(struct tabInstruct * tab, int * tabIndex, char * op,int ra,int 
 }
 
 void printInstruct(struct tabInstruct * tab, int * tabIndex){
-	printf("\n");
 	for (int i=0;i<(*tabIndex);i++){
-		if (tab[i].rc != -1) {
-			printf("%s %d, %d , %d \n",
-			tab[i].op, tab[i].ra, tab[i].rb, tab[i].rc);
-		}else {
-			printf("%s %d, %d  \n",
-			tab[i].op, tab[i].ra, tab[i].rb);
-		}
-
+		printf("%s %d %d %d\n",
+		tab[i].op, tab[i].ra, tab[i].rb, tab[i].rc);
 	}
 }

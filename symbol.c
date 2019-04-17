@@ -69,7 +69,7 @@ int addSymbole(struct line * tab, int * tabIndex,
 		myLine.intInit = intInit;
 		myLine.isConst = isConst;
 		myLine.addr= (*currentAddr);
-		*(currentAddr) += 2;
+		*(currentAddr) += 4;
 		tab[* tabIndex] = myLine;
 		*(tabIndex) += 1;
 		return (*tabIndex);
@@ -86,7 +86,7 @@ int addTemp(struct line * tab, int * tabIndex, int * currentAddr){
 	myLine.isConst = -1;
 	myLine.addr= (*currentAddr);
 	int res = (*currentAddr);
-	*(currentAddr) += 2;
+	*(currentAddr) += 4;
 	tab[* tabIndex] = myLine;
 	*(tabIndex) += 1;
 	return res;
@@ -94,7 +94,7 @@ int addTemp(struct line * tab, int * tabIndex, int * currentAddr){
 
 
 int pop(int * tabIndex, int * currentAddr){
-	*(currentAddr) = (*currentAddr) - 2;
+	*(currentAddr) = (*currentAddr) - 4;
 	*(tabIndex) -= 1;
 	return (*currentAddr);
 }

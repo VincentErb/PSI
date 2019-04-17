@@ -1,0 +1,24 @@
+[1m[[91mwarning[0m[1m][0m Variable "a" not initialized.
+ 
+AFC 0 15 -1
+STORE 4 0 -1
+LOAD 0 4 -1
+STORE 8 0 -1
+AFC 0 2 -1
+STORE 12 0 -1
+LOAD 0 12 -1
+LOAD 1 8 -1
+SOU 0 1 0
+STORE 8 0 -1
+LOAD 0 8 -1
+STORE 0 0 -1
+LOAD 0 0 -1
+PRINT 0 -1 -1
+AFC 0 1 -1
+STORE 8 0 -1
+LOAD 0 8 -1
+LOAD 1 4 -1
+ADD 0 1 0
+STORE 4 0 -1
+LOAD 0 4 -1
+STORE 0 0 -1
