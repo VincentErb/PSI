@@ -1,0 +1,32 @@
+//! **************************************************************************
+// Written by: Map O.87xd on Thu Mar 28 11:49:45 2019
+//! **************************************************************************
+
+SCHEMATIC START;
+COMP "Dout<4>" LOCATE = SITE "V15" LEVEL 1;
+COMP "Dout<5>" LOCATE = SITE "U15" LEVEL 1;
+COMP "Dout<6>" LOCATE = SITE "V16" LEVEL 1;
+COMP "Dout<7>" LOCATE = SITE "U16" LEVEL 1;
+COMP "CK" LOCATE = SITE "B8" LEVEL 1;
+PIN CK_pin<0> = BEL "CK" PINNAME PAD;
+PIN "CK_pin<0>" CLOCK_DEDICATED_ROUTE = FALSE;
+COMP "LOAD" LOCATE = SITE "D9" LEVEL 1;
+COMP "EN" LOCATE = SITE "A8" LEVEL 1;
+COMP "SENS" LOCATE = SITE "C4" LEVEL 1;
+COMP "RST" LOCATE = SITE "C9" LEVEL 1;
+COMP "Din<0>" LOCATE = SITE "T5" LEVEL 1;
+COMP "Din<1>" LOCATE = SITE "V8" LEVEL 1;
+COMP "Din<2>" LOCATE = SITE "U8" LEVEL 1;
+COMP "Din<3>" LOCATE = SITE "N8" LEVEL 1;
+COMP "Din<4>" LOCATE = SITE "M8" LEVEL 1;
+COMP "Dout<0>" LOCATE = SITE "T11" LEVEL 1;
+COMP "Din<5>" LOCATE = SITE "V9" LEVEL 1;
+COMP "Dout<1>" LOCATE = SITE "R11" LEVEL 1;
+COMP "Din<6>" LOCATE = SITE "T9" LEVEL 1;
+COMP "Dout<2>" LOCATE = SITE "N11" LEVEL 1;
+COMP "Din<7>" LOCATE = SITE "T10" LEVEL 1;
+COMP "Dout<3>" LOCATE = SITE "M11" LEVEL 1;
+TIMEGRP CK = BEL "D_0" BEL "D_1" BEL "D_2" BEL "D_3" BEL "D_4" BEL "D_5" BEL
+        "D_6" BEL "D_7" BEL "CK_BUFGP/BUFG";
+SCHEMATIC END;
+

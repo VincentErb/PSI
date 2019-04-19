@@ -1,0 +1,37 @@
+Running: /usr/local/insa/Xilinx.ISE/13.4/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "simprims_ver" -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "/home/arens/CompteurSynchrone/Compteur8bitSynchrone_tb_isim_par.exe" -prj "/home/arens/CompteurSynchrone/Compteur8bitSynchrone_tb_par.prj" "work.Compteur8bitSynchrone_tb" "work.glbl" 
+ISim O.87xd (signature 0x8ddf5b5d)
+Number of CPUs detected in this system: 4
+Turning on mult-threading, number of parallel sub-compilation jobs: 8 
+Determining compilation order of HDL files
+Analyzing Verilog file "/home/arens/CompteurSynchrone/netgen/par/Compteur8bitSynchrone_timesim.v" into library work
+Parsing VHDL file "/home/arens/CompteurSynchrone/Compteur8bitSynchrone_tb.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 96132 KB
+Fuse CPU Usage: 960 ms
+Compiling module glbl
+Compiling module X_CKBUF
+Compiling module sffsrce
+Compiling module X_SFF
+Compiling module X_LUT6(INIT=64'b1101000111000000...
+Compiling module X_LUT5(INIT=32'b0110011001100110...
+Compiling module X_CARRY4
+Compiling module X_OPAD
+Compiling module X_OBUF
+Compiling module X_IPAD
+Compiling module X_BUF
+Compiling module X_INV(LOC="PAD30")
+Compiling module X_ZERO
+Compiling module Compteur8bitSynchrone
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package vl_types
+Compiling architecture behavior of entity compteur8bitsynchrone_tb
+Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 4 VHDL Units
+Compiled 67 Verilog Units
+Built simulation executable /home/arens/CompteurSynchrone/Compteur8bitSynchrone_tb_isim_par.exe
+Fuse Memory Usage: 666788 KB
+Fuse CPU Usage: 1190 ms
+GCC CPU Usage: 140 ms

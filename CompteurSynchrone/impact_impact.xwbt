@@ -1,0 +1,8 @@
+INTSTYLE=impact
+INFILE=/home/arens/CompteurSynchrone/impact.xsl
+OUTFILE=/home/arens/CompteurSynchrone/impact.xsl
+FAMILY=Single
+PART=Single
+WORKINGDIR=/home/arens/CompteurSynchrone
+LICENSE=iMPACT
+USER_INFO=iMPACT

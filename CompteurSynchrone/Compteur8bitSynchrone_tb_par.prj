@@ -1,0 +1,2 @@
+verilog work "netgen/par/Compteur8bitSynchrone_timesim.v"
+vhdl work "Compteur8bitSynchrone_tb.vhd"

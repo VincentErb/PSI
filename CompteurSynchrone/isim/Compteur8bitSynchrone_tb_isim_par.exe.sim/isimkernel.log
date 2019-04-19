@@ -1,0 +1,28 @@
+Command line:
+   Compteur8bitSynchrone_tb_isim_par.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  44369
+
+Thu Mar 28 11:21:58 2019
+
+
+ Elaboration Time: 0.09 sec
+
+ Current Memory Usage: 211.456 Meg
+
+ Total Signals          : 855
+ Total Nets             : 603
+ Total Signal Drivers   : 566
+ Total Blocks           : 139
+ Total Primitive Blocks : 105
+ Total Processes        : 706
+ Total Traceable Variables  : 341
+ Total Scalar Nets and Variables : 10692
+
+ Total Simulation Time: 0.14 sec
+
+ Current Memory Usage: 287.445 Meg
+
+Thu Mar 28 11:37:19 2019
+

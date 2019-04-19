@@ -1,0 +1,28 @@
+Command line:
+   Compteur8bitSynchrone_tb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  33097
+
+Thu Mar 28 11:11:05 2019
+
+
+ Elaboration Time: 0.01 sec
+
+ Current Memory Usage: 203.51 Meg
+
+ Total Signals          : 15
+ Total Nets             : 29
+ Total Signal Drivers   : 3
+ Total Blocks           : 5
+ Total Primitive Blocks : 4
+ Total Processes        : 4
+ Total Traceable Variables  : 12
+ Total Scalar Nets and Variables : 409
+
+ Total Simulation Time: 0.02 sec
+
+ Current Memory Usage: 279.011 Meg
+
+Thu Mar 28 11:12:43 2019
+

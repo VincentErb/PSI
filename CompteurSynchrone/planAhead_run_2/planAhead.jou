@@ -1,0 +1,16 @@
+#-----------------------------------------------------------
+# PlanAhead v13.4 (64-bit)
+# Build 157570 by hdbuild on Fri Dec 16 12:49:33 MST 2011
+# Start of session at: Thu Mar 28 11:41:15 2019
+# Process ID: 2464
+# Log file: /home/arens/CompteurSynchrone/planAhead_run_2/planAhead.log
+# Journal file: /home/arens/CompteurSynchrone/planAhead_run_2/planAhead.jou
+#-----------------------------------------------------------
+start_gui
+source /home/arens/CompteurSynchrone/pa.fromNetlist.tcl
+startgroup
+set_property loc PAD27 [get_ports CK]
+endgroup
+save_design
+exit
+stop_gui
