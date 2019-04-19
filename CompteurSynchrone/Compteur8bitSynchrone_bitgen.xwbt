@@ -1,8 +1,0 @@
-INTSTYLE=ise
-INFILE=/home/arens/CompteurSynchrone/Compteur8bitSynchrone.ncd
-OUTFILE=/home/arens/CompteurSynchrone/Compteur8bitSynchrone.bit
-FAMILY=Spartan6
-PART=xc6slx16-3csg324
-WORKINGDIR=/home/arens/CompteurSynchrone
-LICENSE=ISE
-USER_INFO=202067218_1777487267_210567960_160
