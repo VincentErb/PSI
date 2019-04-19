@@ -103,8 +103,14 @@ if : tIF exp {addInstruct(tabInst,&indexInst,"LOAD",0,pop(&tabIndex, &currentAdd
 								  currentDepth--;
 								  updateInstruct(tabInst,&indexInst, $<e>1);};
 
-while : tWHILE exp tBRACKETOPEN {currentDepth++ ;} instructions tBRACKETCLOSED {removeSymbolFromDepth(tab, &tabIndex,currentDepth,&currentAddr);
-																				 currentDepth--;};
+while : tWHILE {$<e>1 = indexInst;}
+		exp {addInstruct(tabInst,&indexInst,"LOAD",0,pop(&tabIndex, &currentAddr),-1);
+			 $<e>2 = indexInst;
+			 addInstruct(tabInst,&indexInst,"JMPC",-1,0,-1);}
+		tBRACKETOPEN {currentDepth++ ;} instructions tBRACKETCLOSED {addInstruct(tabInst,&indexInst,"JMP",$<e>1,-1,-1);
+																	 removeSymbolFromDepth(tab, &tabIndex,currentDepth,&currentAddr);
+																	 currentDepth--;
+																	 updateInstruct(tabInst,&indexInst, $<e>2);};
 
 
 

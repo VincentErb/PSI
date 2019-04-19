@@ -28,7 +28,7 @@ void addInstruct(struct tabInstruct * tab, int * tabIndex, char * op,int ra,int 
 }
 
 void updateInstruct(struct tabInstruct * tab, int * indexInst, int targetInst){
-	tab[targetInst].ra = (*indexInst) ;
+	tab[targetInst].ra = (*indexInst);
 
 }
 

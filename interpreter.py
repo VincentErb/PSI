@@ -50,6 +50,10 @@ while adr < len(ins):
 	elif ins[adr][0] == "JMPC":
 		print("JUMP to " + str(ins[adr][1]))
 		adr += 1
+	elif ins[adr][0] == "JMP":
+		print("JUMP to " + str(ins[adr][1]))
+		adr += 1
+
 		
 	
 	
