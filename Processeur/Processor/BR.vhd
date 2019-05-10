@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+USE ieee.numeric_std.ALL; 
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -56,18 +57,19 @@ begin
 	
 	-- Reading
 	QA <= Data when Rst='1' and aW='1' and W=A else	--bypass writing on reading
-	QA <= arrayReg(to_integer(to_unsigned(A))) ;
+		arrayReg(to_integer(unsigned(A))) ;
 	QB <= Data when Rst='1' and aW='1' and W=B else	--bypass writing on reading
-	QB <= arrayReg(to_integer(to_unsigned(B))) ;		
+		   arrayReg(to_integer(unsigned(B))) ;		
+	
 	process 
 	begin
-		wait until CK' event and CK='1'; -- front montant d'horloge
+		wait until Clk' event and Clk='1'; -- front montant d'horloge
 		--Reset
 		if RST='0' then 
 			arrayReg <= (others => (others => '0'));
 		--Writing
 		elsif aW='1' then 
-			arrayReg(to_integer(to_unsigned(W))) <= DATA;
+			arrayReg(to_integer(unsigned(W))) <= DATA;
 		end if;
 	end process;
 	
