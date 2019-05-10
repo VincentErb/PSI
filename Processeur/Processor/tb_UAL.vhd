@@ -89,13 +89,66 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 100 ns;	
 
-      -- insert stimulus here 
-		A <= X"03";
-		B <= X"02";
-		
-		wait for 100 ns;
-		Ctrl <= "011";
 
+	 --=====================
+	 --ARITHMETIC OPERATIONS
+	 --=====================
+		
+      -- 3+2 = 5, no flags
+		-- A <= X"03";
+		-- B <= X"02";
+		-- Ctrl <= "001";
+		-- wait for 100 ns;
+		
+		-- 2*5 = 10, no flags
+		-- A <= X"02";
+		-- B <= X"05";
+		-- Ctrl <= "011";
+		-- wait for 100 ns;
+		
+		-- 2-4 = -2, Nf flag
+		A <= X"02";
+		B <= X"04";
+		Ctrl <= "010";
+		wait for 100 ns;
+		
+		-- FF+FF = C + N flag
+		A <= X"ff";
+		B <= X"ff";
+		Ctrl <= "001";
+		wait for 100 ns;
+		
+		-- 7F+7F = V + N flag
+		A <= "01111111";
+		B <= "01111111";
+		Ctrl <= "001";
+		wait for 100 ns;
+		
+		-- 2-2 = 0, Z flag
+		A <= X"02";
+		B <= X"02";
+		Ctrl <= "010";
+		wait for 100 ns;
+		
+	 --=====================
+	 --LOGIC OPERATIONS
+	 --=====================
+		-- DIFZ OK
+		Ctrl <= "100";
+		wait for 100 ns;
+		A<= X"00";
+		
+		-- NOT OK
+		Ctrl <= "101";
+		wait for 100 ns;
+		A<= X"05";
+		wait for 100 ns;
+		
+		-- A < B
+		Ctrl <= "110";
+		wait for 100 ns;
+		A <= X"01";
+		
       wait;
    end process;
 

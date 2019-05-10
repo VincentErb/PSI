@@ -69,12 +69,12 @@ begin
 			Zeros7&Inf				when Ctrl="110" else
 			Zeros8 ;
 		  
-	Add  <= 	('0' & A) + ('0' & B) ;
-	Sub  <= 	A - B ;
+	Add  <= 	('0' & A) + ('0' & B);
+	Sub  <= 	A - B;
 	Mul  <=  A * B;
 	Difz <=  '1' 					when A /= Zeros8 else
 				'0' ; 
-	Nott <=  '1' 					when A(0) = '0' else
+	Nott <=  '1' 					when A = Zeros8 else
 			   '0' ;
 	Inf  <=  '1' 					when A < B else
 			   '0' ;
