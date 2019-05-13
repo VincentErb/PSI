@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    08:33:37 05/10/2019 
+-- Create Date:    10:01:21 05/10/2019 
 -- Design Name: 
--- Module Name:    BR - Behavioral 
+-- Module Name:    MEM - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -30,49 +30,46 @@ USE ieee.numeric_std.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity BR is
+entity MEM is
 	generic(N:natural :=8);
-	port (-- Entries
-			A     : in  std_logic_vector(3 downto 0);
-			B  	: in  std_logic_vector(3 downto 0);
-			W		: in  std_logic_vector(3 downto 0);
-			aW		: in  std_logic; 	-- 1 -> active
-			Data 	: in  std_logic_vector(N-1 downto 0);
+	port (
+			-- DATA MEMORY
+			-- Entries
+			Adrd     : in  std_logic_vector(7 downto 0);
+			Inp  	: in  std_logic_vector(N-1 downto 0);
+			Rw		: in  std_logic;
 			Rst	: in  std_logic; 	-- 0 -> active
 			Clk	: in  std_logic;
 			-- Exits
-			QA    : out std_logic_vector(N-1 downto 0);
-			QB    : out std_logic_vector(N-1 downto 0)
+			Outd   : out std_logic_vector(N-1 downto 0)
+			
 			);
-end BR;
+end MEM;
 
 
 
-architecture Behavioral of BR is
-	type registers is array (0 to N*2-1) of std_logic_vector(N-1 downto 0);
-	signal  arrayReg : registers;    
+architecture Behavioral of MEM is
+	type memory is array (0 to 255) of std_logic_vector(N-1 downto 0);
+	signal  arrayMem : memory;    
 	
 begin
-	-- Writing + reset synchronous (process)+ Reading asysnchronous
-	
-	-- Reading
-	QA <= Data when Rst='1' and aW='1' and W=A else	--bypass writing on reading
-			arrayReg(to_integer(unsigned(A))) ;
-	QB <= Data when Rst='1' and aW='1' and W=B else	--bypass writing on reading
-		   arrayReg(to_integer(unsigned(B))) ;		
-	
+	-- DATA MEMORY
 	process 
 	begin
 		wait until Clk' event and Clk='1'; -- front montant d'horloge
 		--Reset
 		if RST='0' then 
-			arrayReg <= (others => (others => '0'));
+			arrayMem <= (others => (others => '0'));
+		--Reading
+		elsif Rw='1' then 
+			Outd <= arrayMem(to_integer(unsigned(Adrd)));
 		--Writing
-		elsif aW='1' then 
-			arrayReg(to_integer(unsigned(W))) <= DATA;
+		elsif Rw='0' then 
+			arrayMem(to_integer(unsigned(Adrd))) <= Inp;
 		end if;
 	end process;
 	
 
 end Behavioral;
+
 
