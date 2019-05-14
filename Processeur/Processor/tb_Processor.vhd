@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   10:10:17 05/13/2019
+-- Create Date:   09:24:13 05/14/2019
 -- Design Name:   
--- Module Name:   /home/arens/Documents/SysInfo/PSI/Processeur/Processor/tb_Compteur.vhd
+-- Module Name:   /home/arens/Documents/SysInfo/PSI/Processeur/Processor/tb_Processor.vhd
 -- Project Name:  Processor
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: CompteurSynchrone
+-- VHDL Test Bench Created by ISE for module: Processor
 -- 
 -- Dependencies:
 -- 
@@ -32,57 +32,43 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY tb_Compteur IS
-END tb_Compteur;
+ENTITY tb_Processor IS
+END tb_Processor;
  
-ARCHITECTURE behavior OF tb_Compteur IS 
+ARCHITECTURE behavior OF tb_Processor IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT CompteurSynchrone
+    COMPONENT Processor
     PORT(
-         CK : IN  std_logic;
-         EN : IN  std_logic;
-         SENS : IN  std_logic;
-         RST : IN  std_logic;
-        
-         Dout : OUT  std_logic_vector(15 downto 0)
+         Clk : IN  std_logic;
+         Rst : IN  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal CK : std_logic := '0';
-   signal EN : std_logic := '0';
-   signal SENS : std_logic := '0';
-   signal RST : std_logic := '0';
-  
+   signal Clk : std_logic := '0';
+   signal Rst : std_logic := '0';
 
- 	--Outputs
-   signal Dout : std_logic_vector(15 downto 0);
-   -- No clocks detected in port list. Replace <clock> below with 
-   -- appropriate port name 
- 
-   constant CK_period : time := 10 ns;
+   -- Clock period definitions
+   constant Clk_period : time := 10 ns;
  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: CompteurSynchrone PORT MAP (
-          CK => CK,
-          EN => EN,
-          SENS => SENS,
-          RST => RST,
-          Dout => Dout
+   uut: Processor PORT MAP (
+          Clk => Clk,
+          Rst => Rst
         );
 
    -- Clock process definitions
-   CK_process :process
+   Clk_process :process
    begin
-		CK <= '0';
-		wait for CK_period/2;
-		CK <= '1';
-		wait for CK_period/2;
+		Clk <= '0';
+		wait for Clk_period/2;
+		Clk <= '1';
+		wait for Clk_period/2;
    end process;
  
 
@@ -92,12 +78,10 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 100 ns;	
 
-      wait for CK_period*10;
+      wait for Clk_period*10;
 
       -- insert stimulus here 
-		RST  <= '1';
-		EN   <= '0';
-		SENS <= '1';
+		Rst <= '1';
 
       wait;
    end process;

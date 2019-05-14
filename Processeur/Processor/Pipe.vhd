@@ -48,9 +48,7 @@ end Pipe;
 
 
 
-architecture Behavioral of Pipe is
-	type registers is array (0 to N*2-1) of std_logic_vector(N-1 downto 0);
-	signal  arrayReg : registers;    
+architecture Behavioral of Pipe is 
 	
 begin
 	
