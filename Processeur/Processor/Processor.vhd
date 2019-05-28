@@ -187,7 +187,11 @@ architecture Behavioral of Processor is
 	
 	signal liDi, diEx, exMem, memRe : stage_record; 
 	
-	signal ual_lc, mem_lc, re_lc    : std_logic := '0';
+	signal  mem_lc, re_lc    : std_logic := '0';
+	
+	signal ual_lc : std_logic_vector(2 downto 0);
+	
+	signal re_mux, ual_mux, memRe_mux, exMem_mux : std_logic_vector(N-1 downto 0);
 	
 begin
 	------------------------
@@ -226,22 +230,22 @@ begin
 		 
 	------- Banc de registre -------
 	 br_uut: BR PORT MAP (
-				A 		=> br_A,
-				B 		=> br_B,
+				A 		=> liDi.eB(3 downto 0),
+				B 		=> liDi.eC(3 downto 0),
 				W 		=> memRe.eA(3 downto 0),
 				aW 	=> re_lc,-- 1-> active
-				Data 	=> memRe.eB,
+				Data 	=> memRe_mux,
 				Rst	=> Rst,
 				Clk	=> Clk,
 				QA		=> br_QA,
 				QB		=> br_QB
         );
-
+		  
 	----------- Pipeline -----------
 	diEx_uut: Pipe PORT MAP (
 				 A 	=> liDi.eA,
-				 B 	=> liDi.eB,
-				 C 	=>	liDi.eC,
+				 B 	=> re_mux,
+				 C 	=>	br_QB,
 				 Op 	=> liDi.eOp,
 				 Clk 	=> Clk,
 				 eA 	=> diEx.eA,
@@ -249,21 +253,51 @@ begin
 				 eC 	=> diEx.eC,
 				 eOp 	=> diEx.eOp
         );
+	re_mux <= br_QA 	when liDi.eOp = x"01" else
+				 br_QA 	when liDi.eOp = x"02" else
+				 br_QA 	when liDi.eOp = x"03" else
+				 br_QA 	when liDi.eOp = x"09" else
+				 br_QA 	when liDi.eOp = x"0A" else
+				 br_QA 	when liDi.eOp = x"0B" else
+				 liDi.eB when liDi.eOp = x"07" else
+				 br_QA 	when liDi.eOp = x"08" else
+				 liDi.eB when liDi.eOp = x"06" else
+				 br_QA 	when liDi.eOp = x"05" else x"FF";
+	
 	------- UAL -------
 	ual_uut: UAL PORT MAP (
-				A	   => ual_A,
-				B 	   => ual_B,
-				Ctrl  => ual_Ctrl,
+				A	   => diEx.eB,
+				B 	   => diEx.eC,
+				Ctrl  => ual_lc,
 				S 	   => ual_S,
 				Z	   => ual_Z,
 				V 	   => ual_V,
 				C 	   => ual_C,
 				Nf    => ual_Nf
         );
+		  
+	ual_lc <= "001" when diEx.eOp = x"01" else
+				 "010" when diEx.eOp = x"03" else
+				 "011" when diEx.eOp = x"02" else 
+				 "100" when diEx.eOp = x"09" else
+				 "101" when diEx.eOp = x"0A" else
+				 "110" when diEx.eOp = x"0B" else "111" ; 
+				 
+    ual_mux <= ual_S   when diEx.eOp = x"01" else
+					ual_S   when diEx.eOp = x"02" else
+					ual_S   when diEx.eOp = x"03" else
+					ual_S   when diEx.eOp = x"09" else
+					ual_S   when diEx.eOp = x"0A" else
+					ual_S   when diEx.eOp = x"0B" else
+					diEx.eB when diEx.eOp = x"07" else
+					diEx.eB when diEx.eOp = x"08" else
+					diEx.eB when diEx.eOp = x"05" else
+					diEx.eB when diEx.eOp = x"06" else x"FF";		
+					
 	----------- Pipeline -----------
 	exMem_uut: Pipe PORT MAP (
 				 A 	=> diEx.eA,
-				 B 	=> diEx.eB,
+				 B 	=> ual_mux,
 				 C 	=>	(others => '0'),
 				 Op 	=> diEx.eOp,
 				 Clk 	=> Clk,
@@ -272,16 +306,24 @@ begin
 				 eC 	=> open,
 				 eOp 	=> exMem.eOp
         );  
-    
+
+					
+	exMem_mux <= exMem.eB when exMem.eOp = x"07" else
+					 exMem.eA when exMem.eOp = x"08" else x"FF";
+					 
 	------- Memoire -------
 	mem_uut: MEM PORT MAP (
-				Adrd  => mem_Adrd,
-				Inp 	=> mem_Inp,
-				Rw 	=> mem_Rw,
-				Rst 	=> mem_Rst,
+				Adrd  => exMem_mux,
+				Inp 	=> exMem.eB,
+				Rw 	=> mem_lc,
+				Rst 	=> '1',
 				Clk 	=> Clk,
 				Outd 	=> mem_Outd
         );
+		  
+	mem_lc <= '1' when exMem.eOp = x"07" else --read
+				 '0' when exMem.eOp = x"08" else '1';
+				 
 	----------- Pipeline -----------
 	memRe_uut: Pipe PORT MAP (
 				 A 	=> exMem.eA,
@@ -293,10 +335,20 @@ begin
 				 eB	=> memRe.eB,
 				 eC 	=> open,
 				 eOp 	=> memRe.eOp
-     );  	  
-		  
-	 re_lc <= '1' when memRe.eOp=x"06" else '0';
-	
+     ); 
+ 	  
+	memRe_mux <= mem_Outd when memRe.eOp=x"07" else memRe.eB;
+
+		
+	re_lc <= '1' when memRe.eOp=x"01" else				--add
+				'1' when memRe.eOp=x"02" else				--mul
+				'1' when memRe.eOp=x"03" else				--sou
+				'1' when memRe.eOp=x"09" else				--difz
+				'1' when memRe.eOp=x"0A" else				--nott
+				'1' when memRe.eOp=x"0B" else				--inf
+				'1' when memRe.eOp=x"07" else				--load
+				'1' when memRe.eOp=x"05" else 			--cop
+				'1' when memRe.eOp=x"06" else '0';		--afc
+
 
 end Behavioral;
-

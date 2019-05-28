@@ -9,7 +9,7 @@ LOAD 1 4 -1
 INF 0 1 0
 STORE 4 0 -1
 LOAD 0 4 -1
-JMPC 15 0 -1
+JMPC f 0 -1
 AFC 0 3 -1
 STORE 4 0 -1
 JMP 2 -1 -1

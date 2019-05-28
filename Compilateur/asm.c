@@ -34,7 +34,8 @@ void updateInstruct(struct tabInstruct * tab, int * indexInst, int targetInst){
 
 void printInstruct(struct tabInstruct * tab, int * tabIndex){
 	for (int i=0;i<(*tabIndex);i++){
-		printf("%s %d %d %d\n",
+		
+		printf("%s %x %d %d\n",
 		tab[i].op, tab[i].ra, tab[i].rb, tab[i].rc);
 	}
 }
