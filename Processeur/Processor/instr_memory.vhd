@@ -30,42 +30,31 @@ architecture beh of instr_memory is
 		2 => x"FFFFFFFF", 
 		3 => x"FFFFFFFF",
 		4 => x"FFFFFFFF",
-		5 => x"081400FF", -- STORE @14 r0
---		5 => x"050100FF", -- COP r1 r0
+		5 => x"050100FF", -- COP r1 r0
 		6 => x"FFFFFFFF",
 		7 => x"FFFFFFFF", 
 		8 => x"FFFFFFFF",
 		9 => x"FFFFFFFF",
-		10 => x"070114FF", -- LOAD r1 @14
-		
-		11 => x"FFFFFFFF",
-		12 => x"FFFFFFFF", 
+		10 => x"01020001", --ADD r2 r0 r1
+		11 => x"02030001", --MUL r3 r0 r1
+		12 => x"03010001", --SOU r1 r0 r1
 		13 => x"FFFFFFFF",
-		14 => x"FFFFFFFF",
-		15 => x"060007FF", --AFC r0, 7
+		14 => x"FFFFFFFF", 
+		15 => x"FFFFFFFF",
 		16 => x"FFFFFFFF",
-		17 => x"FFFFFFFF", 
-		18 => x"FFFFFFFF",
-		19 => x"FFFFFFFF",
-		20 => x"085500FF", -- STORE @55 r0
---		5 => x"050100FF", -- COP r1 r0
-		21 => x"FFFFFFFF",
-		22 => x"FFFFFFFF", 
+		17 => x"090400FF", --DIFZ r4 r0
+		18 => x"0A0501FF", --NOTT r5 r1
+		19 => x"0B060003", --INF r6 r0 r3
+		20 => x"FFFFFFFF",
+		21 => x"FFFFFFFF", 
+		22 => x"FFFFFFFF",
 		23 => x"FFFFFFFF",
-		24 => x"FFFFFFFF",
-		25 => x"070255FF", -- LOAD r2 @55
---		10 => x"01020001", --ADD r2 r0 r1
---		11 => x"02030001", --MUL r3 r0 r1
---		12 => x"03010001", --SOU r1 r0 r1
---		13 => x"FFFFFFFF",
---		14 => x"FFFFFFFF", 
---		15 => x"FFFFFFFF",
---		16 => x"FFFFFFFF",
---		17 => x"090400FF", --DIFZ r4 r0
---		18 => x"0A0501FF", --NOTT r5 r1
---		19 => x"0B060003", --INF r6 r0 r3
-		
-		
+		24 => x"082200FF" ,--STORE @22,R0
+		25 => x"FFFFFFFF",
+		26 => x"FFFFFFFF", 
+		27 => x"FFFFFFFF",
+		28 => x"FFFFFFFF",
+		29 => x"070722FF", --LOAD R7, @22
 		
 		
 		others => x"FFFFFFFF"
