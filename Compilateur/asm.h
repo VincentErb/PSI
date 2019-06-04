@@ -14,3 +14,5 @@ void addInstruct(struct tabInstruct * tab, int * tabIndex, char * op,int ra,int 
 void updateInstruct(struct tabInstruct * tab, int * indexInst, int targetInst);
 
 void printInstruct(struct tabInstruct * tab, int * tabIndex);
+
+void printInstructHexa(struct tabInstruct * tab, int * tabIndex);

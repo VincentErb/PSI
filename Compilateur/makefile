@@ -8,9 +8,8 @@ y.tab.c: compiler.y
 	yacc -d -t -v compiler.y
 
 test: compiler
-	./compiler < testsimple.c
+	./compiler < test.c
 
-asm: compiler
-	./compiler < testsimple.c > test.s
-
+comp: compiler
+	./compiler < test.c > testASM.s
 
